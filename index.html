@@ -3,944 +3,908 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JobMatch — Part-Time Matching Platform</title>
+  <title>JobMatch — Part-Time Jobs for Students in Japan</title>
+  <meta name="description" content="Find part-time work that matches your skills, schedule, and language. Free. Bilingual. Built for students in Japan.">
+  <meta property="og:title" content="JobMatch — Part-Time Jobs for Students in Japan">
+  <meta property="og:description" content="Skill-matched, bilingual, free. The better way to find part-time work.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700;800&family=Quicksand:wght@400;500;600;700&display=swap');
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ─── Light Mode (default) ─── */
     :root {
-      --primary: #A78BFA;
-      --primary-dark: #7C3AED;
-      --pink: #FFB7C5;
-      --honey: #FBBF24;
-      --matcha: #A7F3D0;
-      --cream: #FFF8F5;
+      --accent: #8B5CF6;
+      --accent-hover: #7C3AED;
+      --accent-light: rgba(139,92,246,0.08);
+      --accent-glow: rgba(139,92,246,0.12);
+      --pink: #EC4899;
+      --pink-light: rgba(236,72,153,0.08);
+      --honey: #F59E0B;
+      --honey-light: rgba(245,158,11,0.08);
+      --matcha: #10B981;
+      --text: #111827;
+      --text-2: #6B7280;
+      --text-3: #9CA3AF;
+      --bg: #FFFFFF;
+      --bg-2: #F9FAFB;
+      --bg-3: #F3F4F6;
       --card: #FFFFFF;
-      --text: #2D1B69;
-      --text-secondary: #8B7AA8;
-      --text-light: #B8A9D4;
-      --lavender-bg: #F5F0FF;
-      --shadow-sm: 0 2px 8px rgba(167,139,250,0.08);
-      --shadow: 0 4px 16px rgba(167,139,250,0.12);
-      --shadow-lg: 0 12px 32px rgba(167,139,250,0.18);
-      --radius: 20px;
-      --radius-sm: 12px;
-      --radius-pill: 999px;
-      --font-head: 'M PLUS Rounded 1c', sans-serif;
-      --font-body: 'Quicksand', sans-serif;
+      --border: #E5E7EB;
+      --shadow: rgba(0,0,0,0.08);
+      --nav-bg: rgba(255,255,255,0.75);
+      --nav-border: rgba(255,255,255,0.8);
+      --mockup-bg: #F9FAFB;
+      --mockup-card: #FFFFFF;
+      --dark: #111827;
+      --dark-2: #1F2937;
+      --dark-text: rgba(255,255,255,0.6);
+      --dark-text-2: rgba(255,255,255,0.35);
+      --btn-dark-bg: #111827;
+      --btn-dark-text: #FFFFFF;
+      --trust-opacity: 0.4;
+      --donation-card-bg: #FFFFFF;
+      --donation-card-border: #111827;
+      --donation-shadow: #111827;
     }
+
+    /* ─── Dark Mode ─── */
+    html.dark {
+      --accent: #A78BFA;
+      --accent-hover: #8B5CF6;
+      --accent-light: rgba(167,139,250,0.12);
+      --accent-glow: rgba(167,139,250,0.15);
+      --pink: #F472B6;
+      --pink-light: rgba(244,114,182,0.1);
+      --honey: #FBBF24;
+      --honey-light: rgba(251,191,36,0.1);
+      --matcha: #34D399;
+      --text: #F3F4F6;
+      --text-2: #9CA3AF;
+      --text-3: #6B7280;
+      --bg: #0A0A0F;
+      --bg-2: #111118;
+      --bg-3: #1A1A24;
+      --card: #141420;
+      --border: #2A2A3A;
+      --shadow: rgba(0,0,0,0.3);
+      --nav-bg: rgba(10,10,15,0.8);
+      --nav-border: rgba(255,255,255,0.08);
+      --mockup-bg: #141420;
+      --mockup-card: #1A1A24;
+      --dark: #F3F4F6;
+      --dark-2: #E5E7EB;
+      --dark-text: rgba(10,10,15,0.7);
+      --dark-text-2: rgba(10,10,15,0.5);
+      --btn-dark-bg: #F3F4F6;
+      --btn-dark-text: #0A0A0F;
+      --trust-opacity: 0.3;
+      --donation-card-bg: #141420;
+      --donation-card-border: #F3F4F6;
+      --donation-shadow: #F3F4F6;
+    }
+
     html { scroll-behavior: smooth; }
     body {
-      font-family: var(--font-body);
-      background: var(--cream);
-      color: var(--text);
-      line-height: 1.6;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--text); background: var(--bg);
+      line-height: 1.6; font-size: 16px; letter-spacing: -0.01em;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
+      transition: background 0.3s, color 0.3s;
     }
+
     .lang-ja { display: none; }
     html[lang="ja"] .lang-en { display: none; }
     html[lang="ja"] .lang-ja { display: inline; }
 
-    /* Nav */
+    /* ─── Mesh Background ─── */
+    .mesh-bg {
+      position: fixed; inset: -50%; z-index: -1;
+      background:
+        radial-gradient(circle at 30% 20%, var(--accent-glow) 0%, transparent 50%),
+        radial-gradient(circle at 70% 80%, var(--pink-light) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, var(--honey-light) 0%, transparent 60%);
+      opacity: 0.5; filter: blur(100px);
+      animation: meshDrift 20s ease-in-out infinite alternate;
+    }
+    @keyframes meshDrift {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(-3%, 3%) scale(1.05); }
+    }
+
+    /* ─── Nav ─── */
     nav {
-      position: fixed; top: 0; left: 0; right: 0;
-      background: rgba(255,255,255,0.85);
-      backdrop-filter: blur(14px);
+      position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px) saturate(1.8);
+      -webkit-backdrop-filter: blur(20px) saturate(1.8);
+      border: 1px solid var(--nav-border);
+      padding: 8px 8px 8px 20px;
+      border-radius: 9999px;
+      display: flex; align-items: center; gap: 16px;
       z-index: 100;
-      padding: 0 28px;
-      height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid rgba(167,139,250,0.1);
+      box-shadow: 0 2px 8px var(--shadow), 0 0 0 1px rgba(0,0,0,0.02);
+      transition: all 0.3s;
+      max-width: calc(100% - 32px);
     }
-    nav .logo {
-      font-family: var(--font-head);
-      font-size: 19px;
-      color: var(--text);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+    nav:hover { box-shadow: 0 4px 16px var(--shadow); }
+    .logo {
+      font-weight: 800; font-size: 16px;
+      color: var(--text); text-decoration: none;
+      letter-spacing: -0.03em;
+      display: flex; align-items: center; gap: 6px;
+      white-space: nowrap;
     }
-    nav .nav-right { display: flex; align-items: center; gap: 14px; }
-    .btn-launch {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 7px 16px;
-      border-radius: var(--radius-pill);
-      font-family: var(--font-body);
-      font-size: 12px;
-      font-weight: 600;
-      background: var(--primary);
-      color: #fff;
-      text-decoration: none;
+    .logo-dot { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; }
+    .nav-links { display: flex; align-items: center; gap: 20px; list-style: none; }
+    .nav-links a {
+      font-size: 13px; font-weight: 600;
+      color: var(--text-2); text-decoration: none;
+      transition: color 0.15s; white-space: nowrap;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-right { display: flex; align-items: center; gap: 8px; }
+    .btn-app {
+      font-size: 13px; font-weight: 700;
+      color: var(--btn-dark-text); background: var(--btn-dark-bg);
+      padding: 8px 16px; border-radius: 9999px;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: all 0.15s; white-space: nowrap;
+    }
+    .btn-app:hover { background: var(--accent); color: #fff; }
+    .lang-pill {
+      display: flex; background: var(--bg-3);
+      border-radius: 9999px; padding: 3px;
+      border: 1px solid var(--border);
+    }
+    .lang-pill span {
+      font-size: 11px; font-weight: 700;
+      padding: 4px 10px; border-radius: 9999px;
+      color: var(--text-3); cursor: pointer;
+      transition: all 0.15s;
+    }
+    .lang-pill span.active { background: var(--btn-dark-bg); color: var(--btn-dark-text); }
+    .theme-toggle {
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 50%; border: 1px solid var(--border);
+      background: var(--bg-3); color: var(--text-2);
+      cursor: pointer; transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .theme-toggle:hover { color: var(--text); border-color: var(--text-3); }
+    .theme-toggle svg { width: 16px; height: 16px; }
+    .theme-toggle .sun { display: none; }
+    .theme-toggle .moon { display: block; }
+    html.dark .theme-toggle .sun { display: block; }
+    html.dark .theme-toggle .moon { display: none; }
+
+    /* ─── Layout ─── */
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+    section { padding: 96px 0; position: relative; z-index: 1; }
+
+    .eyebrow {
+      font-size: 12px; font-weight: 700;
+      color: var(--accent); text-transform: uppercase;
+      letter-spacing: 0.08em; margin-bottom: 16px;
+    }
+    .title {
+      font-size: clamp(32px, 5vw, 52px); font-weight: 800;
+      line-height: 1.08; letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+    .subtitle {
+      font-size: 17px; color: var(--text-2);
+      line-height: 1.55; max-width: 520px;
+    }
+    .subtitle-center { margin-left: auto; margin-right: auto; text-align: center; }
+    .text-center { text-align: center; }
+
+    /* ─── Buttons ─── */
+    .btns { display: flex; gap: 12px; margin-top: 32px; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 15px; font-weight: 700;
+      color: #fff; background: var(--accent);
+      padding: 12px 28px; border-radius: 9999px;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: all 0.15s;
+      box-shadow: 4px 4px 0 var(--donation-shadow);
+    }
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 var(--donation-shadow);
+    }
+    .btn-primary svg { width: 16px; height: 16px; }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 15px; font-weight: 700;
+      color: var(--text); background: var(--card);
+      padding: 12px 28px; border-radius: 9999px;
+      text-decoration: none; border: 2px solid var(--donation-card-border);
+      cursor: pointer; transition: all 0.15s;
+    }
+    .btn-ghost:hover { background: var(--bg-2); }
+    .btn-white {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 15px; font-weight: 700;
+      color: var(--bg); background: var(--text);
+      padding: 14px 32px; border-radius: 9999px;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: all 0.15s;
+      box-shadow: 4px 4px 0 rgba(139,92,246,0.3);
+    }
+    .btn-white:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 rgba(139,92,246,0.3);
+    }
+
+    /* ─── Hero ─── */
+    .hero { min-height: 85vh; display: flex; align-items: center; padding: 120px 0 80px; }
+    .hero-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .hero-title {
+      font-size: clamp(36px, 5.5vw, 60px); font-weight: 800;
+      line-height: 1.06; letter-spacing: -0.035em; margin-bottom: 20px;
+    }
+    .hero-title .accent { color: var(--accent); }
+    .hero-sub { font-size: 18px; color: var(--text-2); line-height: 1.55; margin-bottom: 36px; max-width: 440px; }
+    .hero-proof { display: flex; gap: 40px; margin-top: 48px; }
+    .hero-stat-value { font-size: 28px; font-weight: 800; letter-spacing: -0.03em; line-height: 1; }
+    .hero-stat-label { font-size: 13px; color: var(--text-3); font-weight: 600; margin-top: 4px; }
+
+    /* Mockup */
+    .hero-mockup {
+      background: var(--mockup-bg); border: 2px solid var(--border);
+      border-radius: 24px; padding: 24px;
+      box-shadow: 0 24px 64px var(--shadow);
+      transform: perspective(1000px) rotateY(-4deg);
+      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative; overflow: hidden;
+    }
+    .hero-mockup:hover { transform: perspective(1000px) rotateY(0deg) translateY(-4px); }
+    .mockup-bar { display: flex; gap: 6px; margin-bottom: 16px; }
+    .mockup-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border); }
+    .mockup-dot:first-child { background: #FF5F57; }
+    .mockup-dot:nth-child(2) { background: #FEBC2E; }
+    .mockup-dot:nth-child(3) { background: #28C840; }
+    .mockup-content {
+      background: var(--mockup-card); border-radius: 12px;
+      padding: 20px; min-height: 280px; border: 1px solid var(--border);
+    }
+    .mockup-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border);
+    }
+    .mockup-header-title { font-size: 14px; font-weight: 700; }
+    .mockup-header-badge {
+      font-size: 11px; font-weight: 700;
+      background: var(--accent-light); color: var(--accent);
+      padding: 3px 10px; border-radius: 9999px;
+    }
+    .mockup-jobs { display: flex; flex-direction: column; gap: 10px; }
+    .mockup-job {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px; border-radius: 10px; border: 1px solid var(--border);
       transition: all 0.2s;
     }
-    .btn-launch:hover { background: var(--primary-dark); transform: translateY(-1px); }
-    .lang-toggle {
-      background: var(--lavender-bg);
-      border-radius: var(--radius-pill);
-      padding: 3px;
-      display: flex;
-      cursor: pointer;
+    .mockup-job:hover { border-color: var(--accent); background: var(--accent-light); }
+    .mockup-job-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; flex-shrink: 0;
     }
-    .lang-toggle span {
-      padding: 3px 9px;
-      border-radius: var(--radius-pill);
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--text-light);
-      transition: all 0.2s;
-      cursor: pointer;
-    }
-    .lang-toggle span.active { background: var(--card); color: var(--text); box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+    .mockup-job-icon.purple { background: var(--accent-light); }
+    .mockup-job-icon.pink { background: var(--pink-light); }
+    .mockup-job-icon.honey { background: var(--honey-light); }
+    .mockup-job-info { flex: 1; min-width: 0; }
+    .mockup-job-title { font-size: 13px; font-weight: 700; }
+    .mockup-job-meta { font-size: 11px; color: var(--text-3); font-weight: 500; }
+    .mockup-job-match { font-size: 12px; font-weight: 800; color: var(--accent); white-space: nowrap; }
 
-    section { position: relative; }
-
-    /* Hero */
-    .hero {
-      padding: 100px 40px 48px;
-      text-align: center;
-      background: linear-gradient(180deg, var(--lavender-bg) 0%, var(--cream) 100%);
+    /* ─── Trust Banner (ticker) ─── */
+    .trust-banner {
+      padding: 32px 0; border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border); background: var(--bg-2);
       overflow: hidden;
     }
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -120px; right: -120px;
-      width: 400px; height: 400px;
-      background: radial-gradient(circle, rgba(167,139,250,0.12) 0%, transparent 70%);
-      border-radius: 50%;
-      pointer-events: none;
+    .trust-track {
+      display: flex; gap: 48px; align-items: center;
+      animation: ticker 20s linear infinite;
+      width: max-content;
     }
-    .hero::after {
-      content: '';
-      position: absolute;
-      bottom: -80px; left: -80px;
-      width: 300px; height: 300px;
-      background: radial-gradient(circle, rgba(255,183,197,0.1) 0%, transparent 70%);
-      border-radius: 50%;
-      pointer-events: none;
-    }
-    .hero-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
-    .hero h1 {
-      font-family: var(--font-head);
-      font-size: clamp(32px, 5vw, 50px);
-      line-height: 1.2;
-      margin-bottom: 12px;
-    }
-    .hero h1 .gradient {
-      color: var(--primary-dark);
-    }
-    .hero .sub {
-      font-size: clamp(14px, 1.8vw, 17px);
-      color: var(--text-secondary);
-      max-width: 520px;
-      margin: 0 auto 20px;
-      font-weight: 500;
-    }
-    .hero-benefits {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 8px;
-    }
-    .benefit-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      background: var(--card);
-      padding: 8px 14px;
-      border-radius: var(--radius-pill);
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text-secondary);
-      border: 1px solid rgba(167,139,250,0.1);
-      box-shadow: 0 2px 4px rgba(167,139,250,0.06);
-      transition: all 0.2s;
-    }
-    .benefit-pill:hover {
-      transform: translateY(-2px);
-      border-color: var(--primary);
-      color: var(--primary-dark);
-    }
-    .benefit-pill span:first-child {
-      color: var(--primary-dark);
-      font-size: 13px;
-    }
-    .hero-proof {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(167,139,250,0.08);
-      padding: 6px 16px;
-      border-radius: var(--radius-pill);
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--primary-dark);
-      margin-bottom: 20px;
-    }
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 28px;
-      border-radius: var(--radius-pill);
-      font-family: var(--font-body);
-      font-size: 14px;
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-      color: #fff;
-      text-decoration: none;
-      transition: all 0.25s;
-      box-shadow: 0 4px 12px rgba(167,139,250,0.3);
-    }
-    .btn-primary:hover { 
-      transform: translateY(-2px); 
-      box-shadow: 0 6px 20px rgba(167,139,250,0.4);
-    }
-    .btn-primary:active { transform: translateY(0); }
-    .hero-roles {
-      display: flex;
-      gap: 10px;
-      margin-top: 28px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .hero-roles .role-pill {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      background: var(--card);
-      padding: 7px 14px 7px 9px;
-      border-radius: var(--radius-pill);
-      box-shadow: var(--shadow-sm);
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text-secondary);
-      transition: all 0.25s;
-      cursor: default;
-    }
-    .hero-roles .role-pill:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
-    .hero-roles .role-pill .icon { font-size: 17px; }
-
-    /* Trust Bar */
-    .trust-bar {
-      padding: 32px 40px;
-      background: var(--card);
-      border-top: 1px solid rgba(167,139,250,0.06);
-      border-bottom: 1px solid rgba(167,139,250,0.06);
-    }
-    .trust-bar .container {
-      max-width: 900px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 32px;
-      text-align: left;
+    .trust-track:hover { animation-play-state: paused; }
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
     }
     .trust-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .trust-item .trust-icon {
-      font-size: 24px;
-      margin-bottom: 0;
-    }
-    .trust-item .num {
-      font-family: var(--font-head);
-      font-size: 24px;
-      color: var(--primary-dark);
-      line-height: 1;
-    }
-    .trust-item .label {
-      font-size: 11px;
-      color: var(--text-light);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      display: block;
+      font-size: 15px; font-weight: 800;
+      letter-spacing: -0.02em; color: var(--text);
+      opacity: var(--trust-opacity); white-space: nowrap;
+      filter: grayscale(100%);
     }
 
-    /* Section labels */
-    .section-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+    /* ─── How It Works ─── */
+    .how-cards {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--border);
+      border-radius: 16px; overflow: hidden; border: 1px solid var(--border);
+    }
+    .how-card { background: var(--card); padding: 36px 28px; transition: background 0.2s; }
+    .how-card:hover { background: var(--bg-2); }
+    .how-step { font-size: 12px; font-weight: 800; color: var(--accent); margin-bottom: 16px; letter-spacing: 0.04em; }
+    .how-title { font-size: 17px; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.015em; }
+    .how-desc { font-size: 14px; color: var(--text-2); line-height: 1.55; }
+
+    /* ─── Bento ─── */
+    .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
+    .bento-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 24px; padding: 32px;
+      transition: all 0.3s; position: relative; overflow: hidden;
+    }
+    .bento-card:hover { border-color: var(--accent); box-shadow: 0 8px 24px var(--shadow); }
+    .bento-icon {
+      width: 48px; height: 48px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px; color: var(--accent);
+      background: var(--accent-light); transition: all 0.2s;
+    }
+    .bento-card:hover .bento-icon { background: var(--accent); color: #fff; }
+    .bento-icon svg { width: 22px; height: 22px; }
+    .bento-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.015em; }
+    .bento-desc { font-size: 14px; color: var(--text-2); line-height: 1.55; }
+    .bento-1 { grid-column: span 8; }
+    .bento-2 { grid-column: span 4; }
+    .bento-3 { grid-column: span 12; display: flex; align-items: center; gap: 32px; }
+    .bento-3 .bento-text { flex: 1; }
+    .bento-3 .bento-icon-lg {
+      width: 64px; height: 64px; border-radius: 16px;
+      background: var(--honey-light); display: flex;
+      align-items: center; justify-content: center;
+      flex-shrink: 0; color: var(--honey);
+    }
+    .bento-3 .bento-icon-lg svg { width: 28px; height: 28px; }
+
+    /* ─── Match (dark section) ─── */
+    .match-section {
+      background: var(--dark); color: var(--bg);
+      border-radius: 32px; margin: 0 24px; padding: 80px 48px;
+      position: relative; overflow: hidden;
+    }
+    html.dark .match-section { background: var(--bg-3); color: var(--text); }
+    .match-section::before {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--pink), var(--honey));
+    }
+    .match-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .match-title { color: inherit; }
+    .match-sub { color: var(--dark-text); }
+    html.dark .match-sub { color: var(--text-2); }
+    .match-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(12px);
+      border-radius: 24px; padding: 36px;
+    }
+    html.dark .match-card {
       background: var(--card);
-      color: var(--primary-dark);
-      padding: 8px 16px;
-      border-radius: var(--radius-pill);
-      font-size: 11px;
-      font-weight: 700;
-      margin-bottom: 16px;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      border: 1px solid rgba(167,139,250,0.15);
-      box-shadow: 0 2px 8px rgba(167,139,250,0.08);
-      text-align: left;
+      border-color: var(--border);
     }
-    .diffs .section-label,
-    .match .section-label,
-    .donation .section-label {
-      display: flex;
+    .match-score-row { display: flex; align-items: baseline; gap: 4px; margin-bottom: 4px; }
+    .match-score { font-size: 60px; font-weight: 800; line-height: 1; letter-spacing: -0.04em; }
+    .match-score-unit { font-size: 20px; color: var(--dark-text); font-weight: 600; }
+    html.dark .match-score-unit { color: var(--text-3); }
+    .match-score-label { font-size: 13px; color: var(--dark-text); margin-bottom: 28px; }
+    html.dark .match-score-label { color: var(--text-3); }
+    .match-bar { margin-bottom: 18px; }
+    .match-bar-header { display: flex; justify-content: space-between; margin-bottom: 6px; }
+    .match-bar-name { font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+    .match-bar-name svg { width: 14px; height: 14px; color: var(--accent); }
+    .match-bar-pct { font-size: 13px; font-weight: 800; color: var(--accent); }
+    .match-bar-track { height: 8px; background: rgba(255,255,255,0.08); border-radius: 9999px; overflow: hidden; }
+    html.dark .match-bar-track { background: var(--bg-2); }
+    .match-bar-fill { height: 100%; border-radius: 9999px; width: 0; transition: width 1.4s; }
+    .fill-skills { background: linear-gradient(90deg, var(--accent), #A78BFA); }
+    .fill-lang { background: linear-gradient(90deg, var(--pink), #F472B6); }
+    .match-stars { font-size: 24px; margin-top: 24px; letter-spacing: 3px; }
+    .match-star { opacity: 0.15; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); display: inline-block; }
+    .match-star.lit { opacity: 1; transform: scale(1.1); }
+    .match-note { font-size: 12px; color: var(--dark-text-2); margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.06); }
+    html.dark .match-note { color: var(--text-3); border-color: var(--border); }
+
+    /* ─── Roles ─── */
+    .role-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .role-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px 24px; transition: all 0.2s;
+    }
+    .role-card:hover { border-color: var(--accent); box-shadow: 0 4px 16px var(--shadow); }
+    .role-icon {
+      width: 44px; height: 44px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 16px; color: var(--accent); background: var(--accent-light);
+    }
+    .role-icon svg { width: 22px; height: 22px; }
+    .role-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+    .role-desc { font-size: 14px; color: var(--text-2); line-height: 1.5; }
+
+    /* ─── Donation ─── */
+    .donation-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
+    .donation-card {
+      background: var(--donation-card-bg); border: 2px solid var(--donation-card-border);
+      border-radius: 24px; padding: 28px 16px;
+      text-align: center; cursor: pointer;
+      transition: all 0.2s; position: relative; user-select: none;
+      box-shadow: 4px 4px 0 var(--donation-shadow);
+    }
+    .donation-card:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--donation-shadow); }
+    .donation-card:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--donation-shadow); }
+    .donation-card.selected { background: rgba(16,185,129,0.08); border-color: var(--matcha); box-shadow: 4px 4px 0 var(--matcha); }
+    .donation-card .check {
+      position: absolute; top: 8px; right: 8px;
+      width: 20px; height: 20px; background: var(--matcha);
+      border-radius: 50%; display: none;
+      align-items: center; justify-content: center;
+    }
+    .donation-card.selected .check { display: flex; }
+    .donation-card .check svg { width: 12px; height: 12px; color: #fff; }
+    .donation-icon { font-size: 32px; margin-bottom: 10px; display: block; }
+    .donation-amount { font-size: 18px; font-weight: 800; letter-spacing: -0.02em; }
+    .donation-tier { font-size: 12px; color: var(--text-3); margin-top: 2px; font-weight: 600; }
+
+    .donation-disclaimer {
+      font-size: 14px; font-weight: 600; color: var(--text-2);
+      max-width: 400px; margin: 0 auto;
+      padding: 12px 20px;
+      text-align: center; line-height: 1.5;
+      border-top: 1px solid var(--border);
     }
 
-    /* Diffs */
-    .diffs {
-      padding: 56px 40px;
-      background: var(--cream);
-      text-align: center;
+    /* ─── CTA + Footer ─── */
+    .cta-footer {
+      background: var(--dark); color: var(--bg);
+      border-radius: 32px 32px 0 0;
+      padding: 96px 24px 40px;
+      text-align: center; margin-top: 32px;
     }
-    .diffs .container { max-width: 900px; margin: 0 auto; }
-    .diffs-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-top: 4px;
+    html.dark .cta-footer { background: var(--bg-3); color: var(--text); }
+    .cta-footer .title { color: inherit; }
+    .cta-footer .subtitle { color: var(--dark-text); }
+    html.dark .cta-footer .subtitle { color: var(--text-2); }
+    .footer-links {
+      display: flex; justify-content: center; gap: 24px;
+      margin-top: 48px; padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.06);
     }
-    .diff-card {
-      background: var(--card);
-      border-radius: var(--radius);
-      padding: 28px 20px 24px;
-      text-align: center;
-      transition: all 0.4s cubic-bezier(0.22,1,0.36,1);
-      opacity: 0;
-      transform: translateY(20px);
-      border: 1px solid rgba(167,139,250,0.06);
+    html.dark .footer-links { border-color: var(--border); }
+    .footer-links a {
+      font-size: 13px; color: var(--dark-text-2);
+      text-decoration: none; font-weight: 600; transition: color 0.15s;
     }
-    .diff-card.visible { opacity: 1; transform: translateY(0); }
-    .diff-card:hover { transform: translateY(-4px) scale(1.01); box-shadow: var(--shadow-lg); border-color: var(--primary); }
-    .diff-card .icon-wrap {
-      width: 48px; height: 48px;
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      margin: 0 auto 12px;
-    }
-    .diff-card:nth-child(1) .icon-wrap { background: linear-gradient(135deg, #EDE9FE, #DDD6FE); }
-    .diff-card:nth-child(2) .icon-wrap { background: linear-gradient(135deg, #E0E7FF, #C7D2FE); }
-    .diff-card:nth-child(3) .icon-wrap { background: linear-gradient(135deg, #FEF3C7, #FDE68A); }
-    .diff-card h3 {
-      font-family: var(--font-head);
-      font-size: 16px;
-      margin-bottom: 6px;
-    }
-    .diff-card p {
-      font-size: 13px;
-      color: var(--text-secondary);
-      font-weight: 500;
-      line-height: 1.5;
-    }
+    html.dark .footer-links a { color: var(--text-3); }
+    .footer-links a:hover { color: var(--dark-text); }
+    html.dark .footer-links a:hover { color: var(--text); }
+    .footer-copy { font-size: 12px; color: var(--dark-text-2); font-weight: 500; margin-top: 20px; }
+    html.dark .footer-copy { color: var(--text-3); }
 
-    /* Match */
-    .match {
-      padding: 56px 40px;
-      background: var(--card);
-      text-align: center;
-      overflow: hidden;
+    /* ─── Animations ─── */
+    .fade {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.6s, transform 0.6s;
     }
-    .match .container { max-width: 600px; margin: 0 auto; position: relative; z-index: 1; }
-    .match h2 {
-      font-family: var(--font-head);
-      font-size: clamp(26px, 3.5vw, 34px);
-      margin-bottom: 8px;
+    .fade.visible { opacity: 1; transform: translateY(0); }
+    .fade-left {
+      opacity: 0; transform: translateX(-30px);
+      transition: opacity 0.6s, transform 0.6s;
     }
-    .match .sub {
-      font-size: 15px;
-      color: var(--text-secondary);
-      font-weight: 500;
-      margin-bottom: 24px;
+    .fade-left.visible { opacity: 1; transform: translateX(0); }
+    .fade-right {
+      opacity: 0; transform: translateX(30px);
+      transition: opacity 0.6s, transform 0.6s;
     }
-    .match-meter {
-      background: linear-gradient(135deg, var(--card) 0%, #F8F5FF 100%);
-      border-radius: var(--radius);
-      padding: 32px 28px;
-      box-shadow: var(--shadow), inset 0 0 0 1px rgba(167,139,250,0.08);
-      position: relative;
-      overflow: hidden;
+    .fade-right.visible { opacity: 1; transform: translateX(0); }
+    .scale-in {
+      opacity: 0; transform: scale(0.95);
+      transition: opacity 0.5s, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-    .match-meter::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--primary), var(--pink), var(--honey));
-    }
-    .match-score {
-      font-family: var(--font-head);
-      font-size: 56px;
-      line-height: 1;
-      color: var(--primary-dark);
-      margin-bottom: 2px;
-    }
-    .match-stars {
-      font-size: 22px;
-      margin-bottom: 20px;
-      letter-spacing: 3px;
-    }
-    .match-stars .star { transition: all 0.3s; display: inline-block; }
-    .match-stars .star.active { color: var(--honey); text-shadow: 0 0 8px rgba(251,191,36,0.4); }
-    .match-stars .star:not(.active) { color: #E5E0F0; }
-    .match-bars { text-align: left; }
-    .match-bar-wrap { margin-bottom: 12px; }
-    .match-bar-label {
-      display: flex;
-      justify-content: space-between;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text-secondary);
-      margin-bottom: 3px;
-    }
-    .match-bar-track {
-      height: 8px;
-      background: #EDE9FE;
-      border-radius: var(--radius-pill);
-      overflow: hidden;
-    }
-    .match-bar-fill {
-      height: 100%;
-      border-radius: var(--radius-pill);
-      width: 0;
-      transition: width 1.2s cubic-bezier(0.22,1,0.36,1);
-    }
-    .match-bar-fill.skills { background: linear-gradient(90deg, var(--primary), #8B5CF6); }
-    .match-bar-fill.lang { background: linear-gradient(90deg, var(--pink), #F472B6); }
-    .match-note {
-      font-size: 12px;
-      color: var(--text-light);
-      margin-top: 14px;
-      font-weight: 500;
-    }
+    .scale-in.visible { opacity: 1; transform: scale(1); }
 
-    /* Donation */
-    .donation {
-      padding: 56px 40px 48px;
-      background: var(--cream);
-      text-align: center;
+    /* ─── Responsive ─── */
+    @media (max-width: 900px) {
+      .hero-layout { grid-template-columns: 1fr; gap: 40px; }
+      .hero-text { text-align: center; }
+      .hero-sub { margin: 0 auto 36px; }
+      .btns { justify-content: center; }
+      .hero-proof { justify-content: center; }
+      .hero-mockup { max-width: 420px; margin: 0 auto; transform: none; }
+      .hero-mockup:hover { transform: translateY(-4px); }
+      .how-cards { grid-template-columns: 1fr; }
+      .bento-grid { grid-template-columns: 1fr; }
+      .bento-1, .bento-2, .bento-3 { grid-column: span 1; }
+      .bento-3 { flex-direction: column; text-align: center; }
+      .match-layout { grid-template-columns: 1fr; gap: 40px; }
+      .match-text { text-align: center; }
+      .match-sub { margin: 0 auto; }
+      .role-cards { grid-template-columns: repeat(2, 1fr); }
+      .donation-grid { grid-template-columns: repeat(2, 1fr); }
+      .nav-links { display: none; }
     }
-    .donation .container { max-width: 560px; margin: 0 auto; }
-    .donation h2 {
-      font-family: var(--font-head);
-      font-size: clamp(26px, 3.5vw, 34px);
-      margin-bottom: 8px;
-    }
-    .donation .sub {
-      font-size: 15px;
-      color: var(--text-secondary);
-      font-weight: 500;
-      margin-bottom: 24px;
-    }
-    .cookie-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-    .cookie-card {
-      background: linear-gradient(180deg, var(--card) 0%, #FAFAFA 100%);
-      border-radius: var(--radius);
-      padding: 20px 10px 16px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.22,1,0.36,1);
-      border: 2px solid #F0EDF8;
-      opacity: 0;
-      transform: translateY(16px);
-      position: relative;
-      user-select: none;
-    }
-    .cookie-card.visible { opacity: 1; transform: translateY(0); }
-    .cookie-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba(167,139,250,0.15), 0 0 0 2px var(--primary);
-      border-color: var(--primary);
-    }
-    .cookie-card .emoji { font-size: 28px; display: block; margin-bottom: 6px; transition: transform 0.3s; }
-    .cookie-card .amount {
-      font-family: var(--font-head);
-      font-size: 16px;
-      color: var(--text);
-    }
-    .cookie-card .check {
-      position: absolute;
-      top: 6px; right: 6px;
-      width: 20px; height: 20px;
-      background: var(--matcha);
-      border-radius: 50%;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      color: #065F46;
-    }
-    .cookie-card.selected { border-color: var(--matcha); background: #F0FDF4; }
-    .cookie-card.selected .check { display: flex; }
-    .cookie-card.selected .emoji { transform: scale(1.1); }
-    .cookie-card.bounce { animation: cookiePop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
-    .donation-legal {
-      font-size: 11px;
-      color: var(--text-secondary);
-      max-width: 440px;
-      margin: 0 auto;
-      padding: 14px 18px;
-      background: rgba(167,139,250,0.08);
-      border-radius: var(--radius-sm);
-      border-left: 3px solid var(--primary);
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .donation-legal span {
-      display: block;
-    }
-
-    /* CTA */
-    .cta {
-      padding: 56px 40px;
-      text-align: center;
-      background: linear-gradient(135deg, var(--lavender-bg), var(--cream));
-    }
-    .cta h2 {
-      font-family: var(--font-head);
-      font-size: clamp(26px, 3.5vw, 34px);
-      margin-bottom: 8px;
-    }
-    .cta p {
-      font-size: 15px;
-      color: var(--text-secondary);
-      font-weight: 500;
-      margin-bottom: 20px;
-    }
-    .cta-tagline {
-      display: inline-flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 12px 24px;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--primary-dark);
-      margin-bottom: 24px;
-    }
-    .cta .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 14px 32px;
-      border-radius: var(--radius-pill);
-      font-family: var(--font-body);
-      font-size: 15px;
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-      color: #fff;
-      text-decoration: none;
-      transition: all 0.25s;
-      box-shadow: 0 4px 14px rgba(167,139,250,0.3);
-    }
-    .cta .btn-primary:hover { 
-      transform: translateY(-2px); 
-      box-shadow: 0 8px 24px rgba(167,139,250,0.4);
-    }
-
-    /* Footer */
-    footer {
-      padding: 40px 40px;
-      text-align: center;
-      background: var(--text);
-    }
-    footer .privacy-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: rgba(255,255,255,0.12);
-      padding: 12px 24px;
-      border-radius: var(--radius-pill);
-      margin-bottom: 20px;
-      font-size: 14px;
-      color: #E9D5FF;
-    }
-    footer .privacy-badge span:first-child { font-size: 18px; }
-    footer .copyright {
-      color: rgba(255,255,255,0.5);
-      font-size: 12px;
-    }
-
-    /* Animations */
-    .fade-up {
-      opacity: 0;
-      transform: translateY(16px);
-      transition: opacity 0.5s cubic-bezier(0.22,1,0.36,1), transform 0.5s cubic-bezier(0.22,1,0.36,1);
-    }
-    .fade-up.visible { opacity: 1; transform: translateY(0); }
-
-    /* Mobile */
     @media (max-width: 768px) {
-      .diffs-grid { grid-template-columns: 1fr; gap: 12px; }
-      .cookie-grid { grid-template-columns: repeat(2, 1fr); }
-      .trust-bar { padding: 24px 20px; }
-      .trust-bar .container { 
-        grid-template-columns: repeat(2, 1fr); 
-        gap: 20px;
-      }
-      .hero-roles .role-pill { font-size: 11px; padding: 5px 10px 5px 7px; }
-      .hero-roles .role-pill .icon { font-size: 15px; }
-      nav { padding: 0 16px; }
-      .btn-launch { padding: 6px 12px; font-size: 11px; }
-      .match-meter { padding: 24px 18px; }
-      .match-score { font-size: 44px; }
-      .diffs, .match, .donation, .cta { padding: 40px 20px; }
-      .hero { padding: 100px 20px 40px; }
+      section { padding: 64px 0; }
+      .hero { padding: 100px 0 48px; min-height: auto; }
+      .hero-proof { gap: 24px; flex-wrap: wrap; }
+      .hero-stat-value { font-size: 24px; }
+      .btns { flex-direction: column; align-items: center; }
+      .match-section { margin: 0 16px; padding: 48px 24px; border-radius: 24px; }
+      .match-score { font-size: 48px; }
+      .cta-footer { padding: 64px 16px 32px; border-radius: 24px 24px 0 0; }
+      .trust-track { gap: 32px; }
     }
     @media (max-width: 480px) {
-      .cookie-grid { grid-template-columns: repeat(2, 1fr); }
-      .match-meter { padding: 20px 14px; }
-      .match-score { font-size: 38px; }
-      .diffs { padding: 32px 16px; }
-      .match { padding: 32px 16px; }
-      .donation { padding: 32px 16px; }
-      .cta { padding: 32px 16px; }
-      footer { padding: 24px 16px; }
-      .hero-benefits { gap: 8px; }
-      .benefit-pill { padding: 6px 10px; font-size: 11px; }
+      .hero { padding: 90px 0 40px; }
+      section { padding: 48px 0; }
+      .hero-proof { gap: 20px; }
+      .role-cards { grid-template-columns: 1fr; }
+      .donation-grid { gap: 10px; }
+      .donation-card { padding: 20px 12px; }
+      .match-card { padding: 24px 20px; }
+      .bento-card { padding: 24px 20px; }
+      .donation-disclaimer { padding: 16px; font-size: 13px; }
+      nav { padding: 6px 6px 6px 14px; gap: 10px; }
+      .logo { font-size: 14px; }
+      .btn-app { padding: 6px 12px; font-size: 12px; }
+      .lang-pill span { padding: 3px 8px; font-size: 10px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+      .mesh-bg, .trust-track { animation: none; }
     }
   </style>
 </head>
 <body>
 
-<nav>
-  <a href="#" class="logo">JobMatch <span style="font-size:15px;">🍪</span></a>
+<div class="mesh-bg"></div>
+
+<!-- Nav -->
+<nav id="nav">
+  <a href="#" class="logo">JobMatch<span class="logo-dot"></span></a>
+  <ul class="nav-links">
+    <li><a href="#features"><span class="lang-en">Features</span><span class="lang-ja">機能</span></a></li>
+    <li><a href="#how"><span class="lang-en">How it works</span><span class="lang-ja">仕組み</span></a></li>
+    <li><a href="https://jobmatch-app-blond.vercel.app"><span class="lang-en">Open App</span><span class="lang-ja">アプリを開く</span></a></li>
+  </ul>
   <div class="nav-right">
-    <a href="https://jobmatch-app-blond.vercel.app" class="btn-launch">
-      <span class="lang-en">🚀 Launch App</span>
-      <span class="lang-ja">🚀 アプリを開く</span>
-    </a>
-    <div class="lang-toggle" id="lang-toggle">
+    <div class="lang-pill" id="langToggle">
       <span data-lang="en" class="active">EN</span>
       <span data-lang="ja">JA</span>
     </div>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+    <a href="https://jobmatch-app-blond.vercel.app" class="btn-app">
+      <span class="lang-en">Open App</span><span class="lang-ja">アプリを開く</span>
+    </a>
   </div>
 </nav>
 
 <!-- Hero -->
 <section class="hero">
-  <div class="hero-inner fade-up visible">
-    <div class="hero-proof">
-      <span>⭐</span>
-      <span class="lang-en">1,200+ students already matched</span>
-      <span class="lang-ja">1,200人以上の学生がマッチング済み</span>
-    </div>
-    <h1>
-      <span class="lang-en">Find Your Part-Time Match — <br><span class="gradient">Not Just Any Job</span></span>
-      <span class="lang-ja">アルバイトを探すんじゃない — <br><span class="gradient">マッチする。</span></span>
-    </h1>
-<p class="sub">
-      <span class="lang-en">Jobs that match your skills, schedule, and language.</span>
-      <span class="lang-ja">スキルとスケジュールと言語にマッチする求人。</span>
-    </p>
-    <div class="hero-benefits">
-      <div class="benefit-pill"><span class="lang-en">✓ Verified Jobs</span><span class="lang-ja">✓ 確認済み求人</span></div>
-      <div class="benefit-pill"><span class="lang-en">✓ Privacy Protected</span><span class="lang-ja">✓ プライバシー保護</span></div>
-      <div class="benefit-pill"><span class="lang-en">✓ Bilingual Support</span><span class="lang-ja">✓ バイリンガル対応</span></div>
-      <div class="benefit-pill"><span class="lang-en">✓ Free Forever</span><span class="lang-ja">✓ 完全無料</span></div>
-    </div>
-    <a href="https://jobmatch-app-blond.vercel.app" class="btn-primary">
-      <span class="lang-en">🚀 Find Your Match (it's free)</span>
-      <span class="lang-ja">🚀 マッチングを始める（無料）</span>
-    </a>
-    <div class="hero-roles">
-      <div class="role-pill"><span class="icon">🎓</span> <span class="lang-en">Student</span><span class="lang-ja">学生</span></div>
-      <div class="role-pill"><span class="icon">✈️</span> <span class="lang-en">Intl Student</span><span class="lang-ja">留学生</span></div>
-      <div class="role-pill"><span class="icon">🏪</span> <span class="lang-en">JP Business</span><span class="lang-ja">日本企業</span></div>
-      <div class="role-pill"><span class="icon">🌐</span> <span class="lang-en">Intl Business</span><span class="lang-ja">海外企業</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- Trust Bar -->
-<section class="trust-bar fade-up">
   <div class="container">
-    <div class="trust-item">
-      <div class="trust-icon">🎓</div>
-      <div class="num">1,200+</div>
-      <div class="label lang-en">Students Matched</div>
-      <div class="label lang-ja">学生マッチング数</div>
-    </div>
-    <div class="trust-item">
-      <div class="trust-icon">🏪</div>
-      <div class="num">300+</div>
-      <div class="label lang-en">Businesses</div>
-      <div class="label lang-ja">参加企業数</div>
-    </div>
-    <div class="trust-item">
-      <div class="trust-icon">🎯</div>
-      <div class="num">92%</div>
-      <div class="label lang-en">Match Accuracy</div>
-      <div class="label lang-ja">マッチ精度</div>
-    </div>
-    <div class="trust-item">
-      <div class="trust-icon">🍪</div>
-      <div class="num">¥0</div>
-      <div class="label lang-en">Free Forever</div>
-      <div class="label lang-ja">完全無料</div>
-    </div>
-  </div>
-</section>
-
-<!-- Diffs -->
-<section class="diffs">
-  <div class="container">
-    <div class="section-label fade-up">
-      <span class="lang-en">✨ How We're Different</span>
-      <span class="lang-ja">✨ 他との違い</span>
-    </div>
-    <div class="diffs-grid">
-      <div class="diff-card" style="transition-delay:0ms;">
-        <div class="icon-wrap">🎯</div>
-        <h3><span class="lang-en">Verified & Trusted</span><span class="lang-ja">確認済み・信頼</span></h3>
-        <p><span class="lang-en">Verified businesses. Real reviews. Every job screened.</span><span class="lang-ja">確認済みの企業。本物のレビュー。すべての求人をチェック。</span></p>
-      </div>
-      <div class="diff-card" style="transition-delay:100ms;">
-        <div class="icon-wrap">🔒</div>
-        <h3><span class="lang-en">Privacy First</span><span class="lang-ja">プライバシーを優先</span></h3>
-        <p><span class="lang-en">Your data stays yours. Always. No selling. No leaks.</span><span class="lang-ja">データはあなたのもの。ずっと。販売なし。漏らしなし。</span></p>
-      </div>
-      <div class="diff-card" style="transition-delay:200ms;">
-        <div class="icon-wrap">🍪</div>
-        <h3><span class="lang-en">Free, Forever</span><span class="lang-ja">ずっと無料</span></h3>
-        <p><span class="lang-en">Zero fees. Zero commission. Powered by gratitude.</span><span class="lang-ja">手数料ゼロ。掲載料ゼロ。感謝で運営。</span></p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Match -->
-<section class="match">
-  <div class="container">
-    <div class="section-label fade-up">
-      <span class="lang-en">🎯 How Matching Works</span>
-      <span class="lang-ja">🎯 マッチングの仕組み</span>
-    </div>
-    <h2 class="fade-up">
-      <span class="lang-en">We don't just show listings.<br>We find your fit.</span>
-      <span class="lang-ja">求人を探すんじゃない。<br>あなたに合うバイトを見つける。</span>
-    </h2>
-<p class="sub fade-up">
-      <span class="lang-en">Skills + language matching that actually works. Every job verified.</span>
-      <span class="lang-ja">スキルと言語のマッチングがちゃんと機能。すべての求人は確認済み。</span>
-    </p>
-    <div class="match-meter fade-up">
-      <div class="match-score" id="matchScore">0<span style="font-size:28px;color:var(--text-secondary);">%</span></div>
-      <div class="match-stars" id="matchStars">
-        <span class="star">⭐</span>
-        <span class="star">⭐</span>
-        <span class="star">⭐</span>
-        <span class="star">⭐</span>
-        <span class="star">⭐</span>
-      </div>
-      <div class="match-bars">
-        <div class="match-bar-wrap">
-          <div class="match-bar-label">
-            <span>🧠 <span class="lang-en">Skills</span><span class="lang-ja">スキル</span></span>
-            <span class="match-bar-val" data-target="80">0%</span>
-          </div>
-          <div class="match-bar-track"><div class="match-bar-fill skills" id="skillBar"></div></div>
+    <div class="hero-layout">
+      <div class="hero-text">
+        <div class="eyebrow fade"><span class="lang-en">Trusted by 1,200+ students in Japan</span><span class="lang-ja">日本の1,200人以上の学生に信頼されています</span></div>
+        <h1 class="hero-title fade"><span class="lang-en">The better way to find<br>part-time <span class="accent">work.</span></span><span class="lang-ja">もっと良い方法で<br>アルバイトを<span class="accent">見つけよう。</span></span></h1>
+        <p class="hero-sub fade"><span class="lang-en">Skill-matched, bilingual, free. Built for students in Japan.</span><span class="lang-ja">スキルマッチ、バイリンガル、無料。日本の学生のために。</span></p>
+        <div class="btns fade">
+          <a href="https://jobmatch-app-blond.vercel.app" class="btn-primary"><span class="lang-en">Get started</span><span class="lang-ja">始める</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+          <a href="#how" class="btn-ghost"><span class="lang-en">See how it works</span><span class="lang-ja">仕組みを見る</span></a>
         </div>
-        <div class="match-bar-wrap">
-          <div class="match-bar-label">
-            <span>🗣️ <span class="lang-en">Language</span><span class="lang-ja">言語</span></span>
-            <span class="match-bar-val" data-target="70">0%</span>
-          </div>
-          <div class="match-bar-track"><div class="match-bar-fill lang" id="langBar"></div></div>
+        <div class="hero-proof fade">
+          <div><div class="hero-stat-value" data-count="1200">0</div><div class="hero-stat-label"><span class="lang-en">Students</span><span class="lang-ja">学生</span></div></div>
+          <div><div class="hero-stat-value" data-count="300">0</div><div class="hero-stat-label"><span class="lang-en">Businesses</span><span class="lang-ja">企業</span></div></div>
+          <div><div class="hero-stat-value" data-count="92" data-suffix="%">0</div><div class="hero-stat-label"><span class="lang-en">Match rate</span><span class="lang-ja">マッチ率</span></div></div>
         </div>
       </div>
-      <p class="match-note">
-        <span class="lang-en">➕ No-experience jobs get an extra boost for students with fewer skills</span>
-        <span class="lang-ja">➕ 経験不問の求人はスキルの少ない学生にボーナス</span>
-      </p>
+      <div class="hero-mockup fade-right">
+        <div class="mockup-bar"><div class="mockup-dot"></div><div class="mockup-dot"></div><div class="mockup-dot"></div></div>
+        <div class="mockup-content">
+          <div class="mockup-header">
+            <div class="mockup-header-title"><span class="lang-en">Your Matches</span><span class="lang-ja">あなたのマッチ</span></div>
+            <div class="mockup-header-badge">92% <span class="lang-en">match</span><span class="lang-ja">マッチ</span></div>
+          </div>
+          <div class="mockup-jobs">
+            <div class="mockup-job"><div class="mockup-job-icon purple">☕</div><div class="mockup-job-info"><div class="mockup-job-title"><span class="lang-en">Cafe Barista</span><span class="lang-ja">カフェバリスタ</span></div><div class="mockup-job-meta"><span class="lang-en">Shibuya · ¥1,200/hr · Flexible</span><span class="lang-ja">渋谷 · ¥1,200/時 · 柔軟</span></div></div><div class="mockup-job-match">95%</div></div>
+            <div class="mockup-job"><div class="mockup-job-icon pink">💻</div><div class="mockup-job-info"><div class="mockup-job-title"><span class="lang-en">Tech Support</span><span class="lang-ja">テックサポート</span></div><div class="mockup-job-meta"><span class="lang-en">Remote · ¥1,500/hr · Evenings</span><span class="lang-ja">リモート · ¥1,500/時 · 夜間</span></div></div><div class="mockup-job-match">88%</div></div>
+            <div class="mockup-job"><div class="mockup-job-icon honey">📚</div><div class="mockup-job-info"><div class="mockup-job-title"><span class="lang-en">English Tutor</span><span class="lang-ja">英語チューター</span></div><div class="mockup-job-meta"><span class="lang-en">Shinjuku · ¥2,000/hr · Weekends</span><span class="lang-ja">新宿 · ¥2,000/時 · 週末</span></div></div><div class="mockup-job-match">82%</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Trust Banner (ticker) -->
+<div class="trust-banner">
+  <div class="trust-track">
+    <span class="trust-item">Cafe Tokyo</span>
+    <span class="trust-item">TechHub Japan</span>
+    <span class="trust-item">Global English</span>
+    <span class="trust-item">Matcha Logistics</span>
+    <span class="trust-item">Shibuya Books</span>
+    <span class="trust-item">Ramen Station</span>
+    <span class="trust-item">Campus Gym</span>
+    <span class="trust-item">Tokyo Print</span>
+    <!-- Duplicate for seamless loop -->
+    <span class="trust-item">Cafe Tokyo</span>
+    <span class="trust-item">TechHub Japan</span>
+    <span class="trust-item">Global English</span>
+    <span class="trust-item">Matcha Logistics</span>
+    <span class="trust-item">Shibuya Books</span>
+    <span class="trust-item">Ramen Station</span>
+    <span class="trust-item">Campus Gym</span>
+    <span class="trust-item">Tokyo Print</span>
+  </div>
+</div>
+
+<!-- How It Works -->
+<section id="how">
+  <div class="container">
+    <div class="text-center" style="margin-bottom:48px;">
+      <div class="eyebrow fade"><span class="lang-en">How it works</span><span class="lang-ja">仕組み</span></div>
+      <h2 class="title fade"><span class="lang-en">Three steps. That's it.</span><span class="lang-ja">たった3ステップ。</span></h2>
+    </div>
+    <div class="how-cards">
+      <div class="how-card fade"><div class="how-step">01</div><div class="how-title"><span class="lang-en">Create your profile</span><span class="lang-ja">プロフィールを作成</span></div><div class="how-desc"><span class="lang-en">Skills, schedule, language. Two minutes.</span><span class="lang-ja">スキル、スケジュール、言語。2分で完了。</span></div></div>
+      <div class="how-card fade"><div class="how-step">02</div><div class="how-title"><span class="lang-en">Get matched</span><span class="lang-ja">マッチング</span></div><div class="how-desc"><span class="lang-en">We find jobs that fit you. Not the other way around.</span><span class="lang-ja">あなたに合う求人を見つけます。逆ではありません。</span></div></div>
+      <div class="how-card fade"><div class="how-step">03</div><div class="how-title"><span class="lang-en">Start working</span><span class="lang-ja">働き始める</span></div><div class="how-desc"><span class="lang-en">Apply, interview, begin. Track everything in one place.</span><span class="lang-ja">応募、面接、開始。すべてを一箇所で管理。</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Features (Bento) -->
+<section id="features">
+  <div class="container">
+    <div class="text-center" style="margin-bottom:48px;">
+      <div class="eyebrow fade"><span class="lang-en">Features</span><span class="lang-ja">機能</span></div>
+      <h2 class="title fade"><span class="lang-en">Everything you need. Nothing you don't.</span><span class="lang-ja">必要なものだけ。いらないものなし。</span></h2>
+    </div>
+    <div class="bento-grid">
+      <div class="bento-card bento-1 scale-in">
+        <div class="bento-icon" style="background:var(--accent-light);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6"/><path d="M8 11h6"/></svg></div>
+        <div class="bento-title"><span class="lang-en">Match, don't search</span><span class="lang-ja">探すんじゃなくて、マッチする</span></div>
+        <div class="bento-desc"><span class="lang-en">Our algorithm weighs skills and language to find your best fit. No more endless scrolling.</span><span class="lang-ja">アルゴリズムがスキルと言語を評価して最適な求人を発見。</span></div>
+      </div>
+      <div class="bento-card bento-2 scale-in">
+        <div class="bento-icon" style="background:var(--pink-light); color:var(--pink);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg></div>
+        <div class="bento-title"><span class="lang-en">Verified and trusted</span><span class="lang-ja">確認済みで信頼できる</span></div>
+        <div class="bento-desc"><span class="lang-en">Every business is verified. Every listing is screened. Real reviews from real students.</span><span class="lang-ja">すべての企業は確認済み。すべての求人は審査済み。</span></div>
+      </div>
+      <div class="bento-card bento-3 scale-in">
+        <div class="bento-text">
+          <div class="bento-title"><span class="lang-en">Built bilingual. For every student in Japan.</span><span class="lang-ja">最初からバイリンガル。日本のすべての学生のために。</span></div>
+          <div class="bento-desc"><span class="lang-en">Full English and Japanese support natively integrated. Not a translation layer — built from the ground up.</span><span class="lang-ja">英語と日本語の完全サポートをネイティブに統合。翻訳レイヤーではなくゼロから構築。</span></div>
+        </div>
+        <div class="bento-icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Matching (dark) -->
+<section class="match-section" id="matching">
+  <div class="container">
+    <div class="match-layout">
+      <div class="match-text">
+        <div class="eyebrow fade"><span class="lang-en">Matching</span><span class="lang-ja">マッチング</span></div>
+        <h2 class="title match-title fade"><span class="lang-en">We match.<br>You don't search.</span><span class="lang-ja">マッチする。<br>探すんじゃない。</span></h2>
+        <p class="subtitle match-sub fade"><span class="lang-en">Our algorithm weighs skills (60%) and language (40%) to find your best fit. No-experience jobs get a boost for students just starting out.</span><span class="lang-ja">アルゴリズムがスキル（60%）と言語（40%）を評価。経験不問の求人は新しい学生にボーナス。</span></p>
+      </div>
+      <div class="match-card fade-right">
+        <div class="match-score-row"><div class="match-score" id="matchScore">0</div><div class="match-score-unit">%</div></div>
+        <div class="match-score-label"><span class="lang-en">Typical match score</span><span class="lang-ja">一般的なマッチスコア</span></div>
+        <div class="match-bar">
+          <div class="match-bar-header"><span class="match-bar-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg><span class="lang-en">Skills</span><span class="lang-ja">スキル</span></span><span class="match-bar-pct" id="skillPct">0%</span></div>
+          <div class="match-bar-track"><div class="match-bar-fill fill-skills" id="skillBar"></div></div>
+        </div>
+        <div class="match-bar">
+          <div class="match-bar-header"><span class="match-bar-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><span class="lang-en">Language</span><span class="lang-ja">言語</span></span><span class="match-bar-pct" id="langPct">0%</span></div>
+          <div class="match-bar-track"><div class="match-bar-fill fill-lang" id="langBar"></div></div>
+        </div>
+        <div class="match-stars" id="matchStars"><span class="match-star">★</span><span class="match-star">★</span><span class="match-star">★</span><span class="match-star">★</span><span class="match-star">★</span></div>
+        <div class="match-note"><span class="lang-en">No-experience listings receive a matching boost.</span><span class="lang-ja">経験不問の求人はマッチングボーナス付き。</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Roles -->
+<section>
+  <div class="container">
+    <div class="text-center" style="margin-bottom:48px;">
+      <div class="eyebrow fade"><span class="lang-en">For everyone</span><span class="lang-ja">すべての人のために</span></div>
+      <h2 class="title fade"><span class="lang-en">Built for the whole ecosystem.</span><span class="lang-ja">エコシステム全体のために。</span></h2>
+    </div>
+    <div class="role-cards">
+      <div class="role-card fade"><div class="role-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 6 3 6 3s3 0 6-3v-5"/></svg></div><div class="role-title"><span class="lang-en">Students</span><span class="lang-ja">学生</span></div><div class="role-desc"><span class="lang-en">Find jobs that fit your schedule and skills.</span><span class="lang-ja">スケジュールとスキルに合う求人を見つけよう。</span></div></div>
+      <div class="role-card fade"><div class="role-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><div class="role-title"><span class="lang-en">International Students</span><span class="lang-ja">留学生</span></div><div class="role-desc"><span class="lang-en">Bilingual support. Work permission guidance.</span><span class="lang-ja">バイリンガル対応。就労許可のガイダンス。</span></div></div>
+      <div class="role-card fade"><div class="role-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><div class="role-title"><span class="lang-en">Local Businesses</span><span class="lang-ja">地元企業</span></div><div class="role-desc"><span class="lang-en">Reach motivated student workers instantly.</span><span class="lang-ja">やる気のある学生にすぐにリーチ。</span></div></div>
+      <div class="role-card fade"><div class="role-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div><div class="role-title"><span class="lang-en">International Businesses</span><span class="lang-ja">海外企業</span></div><div class="role-desc"><span class="lang-en">Post in English. Hire bilingual talent.</span><span class="lang-ja">英語で投稿。バイリンガル人材を採用。</span></div></div>
     </div>
   </div>
 </section>
 
 <!-- Donation -->
-<section class="donation">
-  <div class="container">
-    <div class="section-label fade-up">
-      <span class="lang-en">🍪 Thank-You Cookie</span>
-      <span class="lang-ja">🍪 感謝の気持ち</span>
+<section id="donation">
+  <div class="container" style="max-width:640px; text-align:center;">
+    <div class="eyebrow fade"><span class="lang-en">The cookie model</span><span class="lang-ja">クッキーモデル</span></div>
+    <h2 class="title fade"><span class="lang-en">Free, forever. Supported by gratitude.</span><span class="lang-ja">ずっと無料。感謝で支えられています。</span></h2>
+    <p class="subtitle subtitle-center fade" style="margin-bottom:40px;"><span class="lang-en">JobMatch charges no fees. After a successful match, users can send a voluntary thank-you cookie. That's it.</span><span class="lang-ja">JobMatchは手数料を取りません。マッチ成功後、任意で感謝のクッキーを送れます。それだけ。</span></p>
+    <div class="donation-grid">
+      <div class="donation-card"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span class="donation-icon">🍪</span><div class="donation-amount">¥1,000</div><div class="donation-tier"><span class="lang-en">Cookie</span><span class="lang-ja">クッキー</span></div></div>
+      <div class="donation-card"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span class="donation-icon">🍪🍪</span><div class="donation-amount">¥2,000</div><div class="donation-tier"><span class="lang-en">Double</span><span class="lang-ja">ダブル</span></div></div>
+      <div class="donation-card"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span class="donation-icon">🍪🍪🍪</span><div class="donation-amount">¥3,000</div><div class="donation-tier"><span class="lang-en">Party</span><span class="lang-ja">パーティー</span></div></div>
+      <div class="donation-card"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span class="donation-icon">🎂</span><div class="donation-amount">¥5,000</div><div class="donation-tier"><span class="lang-en">Premium</span><span class="lang-ja">プレミアム</span></div></div>
     </div>
-    <h2 class="fade-up">
-      <span class="lang-en">Other platforms take a cut.<br>We take cookies.</span>
-      <span class="lang-ja">他は手数料を取る。<br>私たちはクッキーでいい。</span>
-    </h2>
-    <p class="sub fade-up">
-      <span class="lang-en">Pick Your Gratitude Level — No Pressure · No Obligation</span>
-      <span class="lang-ja">感謝レベルを選んでください — 強制ではありません</span>
-    </p>
-    <div class="cookie-grid">
-      <div class="cookie-card" style="transition-delay:0ms;">
-        <span class="check">✓</span>
-        <span class="emoji">🍪</span>
-        <span class="amount">¥1,000</span>
-      </div>
-      <div class="cookie-card" style="transition-delay:80ms;">
-        <span class="check">✓</span>
-        <span class="emoji">🍪🍪</span>
-        <span class="amount">¥2,000</span>
-      </div>
-      <div class="cookie-card" style="transition-delay:160ms;">
-        <span class="check">✓</span>
-        <span class="emoji">🍪🍪🍪</span>
-        <span class="amount">¥3,000</span>
-      </div>
-      <div class="cookie-card" style="transition-delay:240ms;">
-        <span class="check">✓</span>
-        <span class="emoji">🎂</span>
-        <span class="amount">¥5,000</span>
-      </div>
-    </div>
-    <div class="donation-legal fade-up">
-      <span class="lang-en">⚠️ This is NOT a fee. JobMatch is 100% free.</span>
-      <span class="lang-en">Donations are voluntary gratitude gifts.</span>
-      <span class="lang-ja">⚠️ これは手数料ではありません。JobMatchは完全無料です。</span>
-      <span class="lang-ja">寄付は任意の感謝の気持ちです。</span>
+    <div class="donation-disclaimer fade">
+      <span class="lang-en">Not a fee — a thank-you after you get hired</span>
+      <span class="lang-ja">手数料ではありません — 採用された後の感謝の気持ち</span>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
-<section class="cta">
-  <h2 class="fade-up">
-    <span class="lang-en">JobMatch is Free — <br>Always</span>
-    <span class="lang-ja">JobMatchは無料 — <br>いつまでも</span>
-  </h2>
-  <p class="cta-tagline fade-up">
-    <span class="lang-en">No Fees · No Commissions · Just Warm Matches</span>
-    <span class="lang-ja">手数料ゼロ · コミッションゼロ · あたたかいマッチング</span>
-  </p>
-  <a href="https://jobmatch-app-blond.vercel.app" class="btn-primary fade-up">
-    <span class="lang-en">🚀 Launch JobMatch</span>
-    <span class="lang-ja">🚀 JobMatchを開く</span>
-  </a>
-</section>
-
-<footer>
-  <div class="privacy-badge">
-    <span>🔒</span>
-    <span class="lang-en">Your privacy matters. Your data stays yours.</span>
-    <span class="lang-ja">プライバシーを保護。データはあなたのもの。</span>
+<!-- CTA + Footer -->
+<div class="cta-footer">
+  <div class="container" style="max-width:640px;">
+    <div class="eyebrow fade" style="color:var(--dark-text-2);"><span class="lang-en">Ready?</span><span class="lang-ja">準備はできましたか？</span></div>
+    <h2 class="title fade"><span class="lang-en">Ready to find your next job?</span><span class="lang-ja">次のバイトを見つけよう。</span></h2>
+    <p class="subtitle subtitle-center fade"><span class="lang-en">Free. Bilingual. Built for students in Japan.</span><span class="lang-ja">無料。バイリンガル。日本の学生のために。</span></p>
+    <div style="margin-top:32px;">
+      <a href="https://jobmatch-app-blond.vercel.app" class="btn-white fade"><span class="lang-en">Get started</span><span class="lang-ja">始める</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+    </div>
+    <div class="footer-links">
+      <a href="#features"><span class="lang-en">Features</span><span class="lang-ja">機能</span></a>
+      <a href="#how"><span class="lang-en">How it works</span><span class="lang-ja">仕組み</span></a>
+      <a href="https://jobmatch-app-blond.vercel.app"><span class="lang-en">Open App</span><span class="lang-ja">アプリを開く</span></a>
+    </div>
+    <p class="footer-copy">© 2026 JobMatch · <span class="lang-en">Tokyo, Japan</span><span class="lang-ja">東京、日本</span></p>
   </div>
-  <p class="copyright">© 2026 JobMatch · <span class="lang-en">Built for students in Japan</span><span class="lang-ja">日本の学生のために</span></p>
-</footer>
+</div>
 
 <script>
-const html = document.documentElement;
-const langToggle = document.getElementById('lang-toggle');
-const savedLang = localStorage.getItem('jobmatch_site_lang') || 'en';
-function setLang(lang) {
-  html.lang = lang;
-  langToggle.querySelectorAll('span').forEach(s => s.classList.toggle('active', s.dataset.lang === lang));
-  try { localStorage.setItem('jobmatch_site_lang', lang); } catch(e) {}
-}
-langToggle.addEventListener('click', function(e) {
-  const span = e.target.closest('span');
-  if (!span || !span.dataset.lang) return;
-  setLang(span.dataset.lang);
-});
-setLang(savedLang);
+(function() {
+  'use strict';
 
-const fadeObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      fadeObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.15 });
-document.querySelectorAll('.fade-up').forEach(el => fadeObserver.observe(el));
+  // ─── Theme ───
+  const html = document.documentElement;
+  const themeBtn = document.getElementById('themeToggle');
+  const savedTheme = localStorage.getItem('jm_theme') || 'light';
 
-const diffObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      diffObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.3 });
-document.querySelectorAll('.diff-card').forEach(el => diffObserver.observe(el));
-
-const cookieObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      cookieObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.3 });
-document.querySelectorAll('.cookie-card').forEach(el => cookieObserver.observe(el));
-
-document.querySelectorAll('.cookie-card').forEach(card => {
-  card.addEventListener('click', function() {
-    this.classList.toggle('selected');
-    this.classList.remove('bounce');
-    void this.offsetWidth;
-    this.classList.add('bounce');
-  });
-});
-
-let meterAnimated = false;
-const meterObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting && !meterAnimated) {
-      animateMeter();
-      meterAnimated = true;
-      meterObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.35 });
-const meterEl = document.querySelector('.match-meter');
-if (meterEl) meterObserver.observe(meterEl);
-
-function animateMeter() {
-  const scoreEl = document.getElementById('matchScore');
-  const skillBar = document.getElementById('skillBar');
-  const langBar = document.getElementById('langBar');
-  const barVals = document.querySelectorAll('.match-bar-val');
-  const stars = document.querySelectorAll('#matchStars .star');
-  const targetScore = 92;
-  const targetSkills = 80;
-  const targetLang = 70;
-  const duration = 1400;
-  let start = null;
-
-  function step(timestamp) {
-    if (!start) start = timestamp;
-    const progress = Math.min((timestamp - start) / duration, 1);
-    const eased = 1 - Math.pow(1 - progress, 3);
-
-    const currentScore = Math.round(targetScore * eased);
-    scoreEl.innerHTML = currentScore + '<span style="font-size:28px;color:var(--text-secondary);">%</span>';
-
-    const currentSkills = Math.round(targetSkills * eased);
-    skillBar.style.width = currentSkills + '%';
-    barVals[0].textContent = currentSkills + '%';
-
-    const currentLang = Math.round(targetLang * eased);
-    langBar.style.width = currentLang + '%';
-    barVals[1].textContent = currentLang + '%';
-
-    const starCount = Math.min(5, Math.floor((currentScore / 92) * 5.5));
-    stars.forEach((s, i) => s.classList.toggle('active', i < starCount));
-
-    if (progress < 1) requestAnimationFrame(step);
+  function setTheme(theme) {
+    html.classList.toggle('dark', theme === 'dark');
+    try { localStorage.setItem('jm_theme', theme); } catch(e) {}
   }
-  requestAnimationFrame(step);
-}
+
+  themeBtn.addEventListener('click', () => {
+    setTheme(html.classList.contains('dark') ? 'light' : 'dark');
+  });
+
+  // Auto-detect system preference if no saved preference
+  if (!localStorage.getItem('jm_theme') && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    setTheme('dark');
+  } else {
+    setTheme(savedTheme);
+  }
+
+  // ─── Language ───
+  const langToggle = document.getElementById('langToggle');
+  const savedLang = localStorage.getItem('jm_lang') || 'en';
+
+  function setLang(lang) {
+    html.lang = lang;
+    langToggle.querySelectorAll('span').forEach(s => s.classList.toggle('active', s.dataset.lang === lang));
+    try { localStorage.setItem('jm_lang', lang); } catch(e) {}
+  }
+
+  langToggle.addEventListener('click', e => {
+    const s = e.target.closest('span[data-lang]');
+    if (s) setLang(s.dataset.lang);
+  });
+  setLang(savedLang);
+
+  // ─── Fade / Slide observers ───
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -24px 0px' });
+  document.querySelectorAll('.fade, .fade-left, .fade-right, .scale-in').forEach(el => obs.observe(el));
+
+  // ─── Counter animation ───
+  const counterObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        animateCounter(e.target);
+        counterObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelectorAll('[data-count]').forEach(el => counterObs.observe(el));
+
+  function animateCounter(el) {
+    const target = parseInt(el.dataset.count);
+    const suffix = el.dataset.suffix || '';
+    const prefix = el.dataset.prefix || '';
+    const dur = 1500;
+    let start = null;
+
+    function step(ts) {
+      if (!start) start = ts;
+      const p = Math.min((ts - start) / dur, 1);
+      const ease = 1 - Math.pow(1 - p, 4);
+      const val = Math.round(target * ease);
+      el.textContent = prefix + (target >= 1000 ? val.toLocaleString() : val) + suffix;
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  // ─── Donation cards ───
+  document.querySelectorAll('.donation-card').forEach(card => {
+    card.addEventListener('click', function() {
+      document.querySelectorAll('.donation-card').forEach(c => c.classList.remove('selected'));
+      this.classList.add('selected');
+    });
+  });
+
+  // ─── Match animation ───
+  let matchDone = false;
+  const mObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting && !matchDone) { animateMatch(); matchDone = true; mObs.unobserve(e.target); } });
+  }, { threshold: 0.3 });
+  const mEl = document.querySelector('.match-card');
+  if (mEl) mObs.observe(mEl);
+
+  function animateMatch() {
+    const score = document.getElementById('matchScore');
+    const sBar = document.getElementById('skillBar');
+    const lBar = document.getElementById('langBar');
+    const sPct = document.getElementById('skillPct');
+    const lPct = document.getElementById('langPct');
+    const stars = document.querySelectorAll('#matchStars .match-star');
+    const dur = 1600;
+    let start = null;
+
+    function step(ts) {
+      if (!start) start = ts;
+      const p = Math.min((ts - start) / dur, 1);
+      const ease = 1 - Math.pow(1 - p, 4);
+
+      const sc = Math.round(92 * ease);
+      score.textContent = sc;
+      const sk = Math.round(80 * ease);
+      sBar.style.width = sk + '%';
+      sPct.textContent = sk + '%';
+      const ln = Math.round(70 * ease);
+      lBar.style.width = ln + '%';
+      lPct.textContent = ln + '%';
+
+      const litCount = Math.min(5, Math.floor((sc / 92) * 5.5));
+      stars.forEach((s, i) => { if (i < litCount) s.classList.add('lit'); });
+
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+})();
 </script>
 </body>
 </html>
